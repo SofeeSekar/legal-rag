@@ -10,7 +10,14 @@
       "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/python -c \":*)",
       "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/streamlit run:*)",
       "Bash(.venv/Scripts/python -c \":*)",
-      "Bash(python -c \":*)"
+      "Bash(python -c \":*)",
+      "Bash(python -m venv .venv)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/python -c \"import streamlit, pandas, matplotlib, seaborn, fpdf, huggingface_hub; print\\(''All packages OK''\\)\")",
+      "Bash(curl -s http://localhost:8502)",
+      "Bash(curl -s http://localhost:8501)",
+      "Bash(start \"C:/Users/sofia/Desktop/Portfolio/index.html\")",
+      "Bash(.venv/Scripts/python -c \"from modules import summarizer, exporter; print\\(''''All modules OK''''\\)\")"
     ]
   }
 }
