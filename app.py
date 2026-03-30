@@ -43,20 +43,20 @@ st.markdown("""
 
 /* Chat messages */
 .chat-user {
-    background: linear-gradient(135deg, #1e1e4a, #1a1a3e);
-    border: 1px solid #3a3a7a; border-radius: 12px 12px 4px 12px;
-    padding: 14px 18px; margin: 8px 0; color: #e0e0ff;
-    margin-left: 20%;
+    background: linear-gradient(135deg, #1a3a6e, #1e2d5a);
+    border: 1px solid #3a6aaa; border-radius: 18px 18px 4px 18px;
+    padding: 14px 18px; margin: 8px 0; color: #ddeeff;
+    margin-left: 15%; box-shadow: 0 2px 12px rgba(60,120,255,0.15);
 }
 .chat-ai {
-    background: #12122a; border: 1px solid #2a2a5a;
-    border-radius: 12px 12px 12px 4px;
-    padding: 14px 18px; margin: 8px 0; color: #c8c8e8;
-    margin-right: 20%;
+    background: linear-gradient(135deg, #1a1a2e, #16162a);
+    border: 1px solid #3a3a6a; border-radius: 18px 18px 18px 4px;
+    padding: 14px 18px; margin: 8px 0; color: #d0d0f0;
+    margin-right: 15%; box-shadow: 0 2px 12px rgba(100,80,200,0.1);
 }
 .chat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
-.chat-label.user { color: #7070ff; text-align: right; }
-.chat-label.ai   { color: #5555aa; }
+.chat-label.user { color: #6699ff; text-align: right; }
+.chat-label.ai   { color: #9988dd; }
 
 /* Risk badges */
 .risk-high   { background:#3a0a0a; border:1px solid #aa2222; color:#ff6666; padding:4px 12px; border-radius:20px; font-size:0.78rem; font-weight:700; }
@@ -225,17 +225,25 @@ with tab_chat:
         for msg in st.session_state.chat_history:
             if msg["role"] == "user":
                 st.markdown(f"""
-                <div class='chat-label user'>YOU</div>
+                <div class='chat-label user'>🧑‍💼 YOU</div>
                 <div class='chat-user'>{msg['content']}</div>""", unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                 <div class='chat-label ai'>⚖️ LEXRAG</div>
                 <div class='chat-ai'>{msg['content']}</div>""", unsafe_allow_html=True)
 
-    # Input
+    # Input — use session state key trick to clear after submit
+    if "input_key" not in st.session_state:
+        st.session_state.input_key = 0
+
     col_q, col_btn = st.columns([6, 1])
     with col_q:
-        question = st.text_input("Ask a question:", placeholder="e.g. What are the termination conditions?", label_visibility="collapsed")
+        question = st.text_input(
+            "Ask a question:",
+            placeholder="e.g. What are the termination conditions?",
+            label_visibility="collapsed",
+            key=f"q_{st.session_state.input_key}"
+        )
     with col_btn:
         ask_btn = st.button("Ask →", type="primary", use_container_width=True)
 
@@ -244,12 +252,13 @@ with tab_chat:
             answer, sources = qa.answer(question, doc_ids=scope if scope else None)
         st.session_state.chat_history.append({"role": "user", "content": question})
         st.session_state.chat_history.append({"role": "assistant", "content": answer})
+        st.session_state.input_key += 1  # clears the input box
 
         if sources:
             with st.expander("📎 View Source Excerpts"):
                 for c in sources:
-                    st.markdown(f"**{c['source']} — Page {c['page']}** (relevance: {c['score']:.0%})")
-                    st.caption(c["text"][:400] + ("…" if len(c["text"]) > 400 else ""))
+                    st.markdown(f"**{c['source']} - Page {c['page']}** (relevance: {c['score']:.0%})")
+                    st.caption(c["text"][:400] + ("..." if len(c["text"]) > 400 else ""))
                     st.divider()
         st.rerun()
 
