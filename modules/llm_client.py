@@ -11,9 +11,18 @@ _client = None
 def get_client() -> InferenceClient:
     global _client
     if _client is None:
-        token = os.environ.get("HF_TOKEN")
+        # Try Streamlit secrets first (for cloud deployment)
+        token = None
+        try:
+            import streamlit as st
+            token = st.secrets.get("HF_TOKEN")
+        except Exception:
+            pass
+        # Fall back to environment variable
         if not token:
-            raise ValueError("HF_TOKEN not found in .env file")
+            token = os.environ.get("HF_TOKEN")
+        if not token:
+            raise ValueError("HF_TOKEN not found. Please add it in Streamlit secrets or .env file.")
         _client = InferenceClient(token=token)
     return _client
 
