@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(pip install:*)",
+      "Bash(python -m pip install anthropic streamlit chromadb sentence-transformers pdfplumber python-docx python-dotenv -q)",
+      "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/pip install:*)",
+      "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/python -c \"import anthropic, streamlit, chromadb, sentence_transformers, pdfplumber, docx; print\\(''All packages OK''\\)\")",
+      "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/python -c \":*)",
+      "Bash(C:/Users/sofia/Desktop/RAG/.venv/Scripts/streamlit run:*)",
+      "Bash(.venv/Scripts/python -c \":*)",
+      "Bash(python -c \":*)"
+    ]
+  }
+}

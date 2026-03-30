@@ -1,0 +1,7 @@
+google-generativeai
+streamlit
+chromadb
+sentence-transformers
+pdfplumber
+python-docx
+python-dotenv
