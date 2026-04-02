@@ -6,4 +6,6 @@ pdfplumber
 python-docx
 python-dotenv
 fpdf2
-protobuf>=5.29.0
+protobuf>=4.25.0,<6.0.0
+opentelemetry-proto>=1.27.0
+opentelemetry-exporter-otlp-proto-grpc>=1.27.0
